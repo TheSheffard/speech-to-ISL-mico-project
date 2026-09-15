@@ -36,12 +36,18 @@ The application follows a modular three-tier architecture:
 
 1. Install Python dependencies:
 ```bash
-pip install sounddevice numpy openai flask flask-cors python-dotenv
+pip install -r backend/requirements.txt
 ```
 
-2. Create a `.env` file in the `backend/` directory:
+2. Create a `.env` file in the `backend/` directory by copying the example file:
 ```bash
-OPENAI_API_KEY=your_openai_key_here
+cd backend
+copy .env.example .env
+```
+
+3. Open `backend/.env` and set your API key:
+```env
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 **Security Note**: Never commit the `.env` file to version control.

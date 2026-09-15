@@ -1,87 +1,63 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: 'class', // Enable class-based dark mode
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
         inter: [
-          "Inter",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "Roboto",
-          "Oxygen",
-          "Ubuntu",
-          "Cantarell",
-          "sans-serif",
+          "Inter", "system-ui", "-apple-system", "BlinkMacSystemFont",
+          "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "sans-serif",
         ],
+        // New roles for the redesign
+        display: ["Space Grotesk", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      animation: {
-        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
-        spin: "spin 1s linear infinite",
-      },
-      backdropBlur: {
-        xs: "2px",
-        sm: "4px",
-        md: "8px",
-        lg: "12px",
-        xl: "16px",
-        "2xl": "24px",
-        "3xl": "40px",
+      // Semantic tokens — values come from CSS variables in index.css and flip
+      // automatically under the `dark` class. Use like: bg-surface, text-ink, border-line.
+      colors: {
+        canvas: "var(--canvas)",
+        surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
+        line: "var(--line)",
+        ink: "var(--ink)",
+        muted: "var(--muted)",
+        accent: "var(--accent)",
+        "accent-ink": "var(--accent-text)",
+        "accent-soft": "var(--accent-soft)",
+        "on-accent": "var(--on-accent)",
+        live: "var(--live)",
+        "live-ink": "var(--live-text)",
+        "live-soft": "var(--live-soft)",
+        "on-live": "var(--on-live)",
+        stage: "var(--stage)",
+        "stage-line": "var(--stage-line)",
+        "stage-ink": "var(--stage-ink)",
+
+        // --- your existing custom stops (kept so older components don't break) ---
+        emerald: { 25: "#f0fdf4" },
+        teal: { 25: "#f0fdfa" },
+        cyan: { 25: "#ecfeff" },
+        slate: { 25: "#fcfcfd", 850: "#1e293b", 925: "#0f172a" },
+        indigo: { 25: "#f8fafc" },
+        sky: { 25: "#f0f9ff" },
+        blue: { 25: "#eff6ff" },
       },
       boxShadow: {
-        custom:
-          "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-        xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-        inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
-        // Dark mode shadows
-        'dark-lg': "0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1)",
-        'dark-xl': "0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
+        soft: "var(--shadow)",
+        custom: "0 10px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04)",
+        lg: "0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05)",
+        xl: "0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04)",
+        "2xl": "0 25px 50px -12px rgba(0,0,0,.25)",
+        inner: "inset 0 2px 4px 0 rgba(0,0,0,.06)",
+        "dark-lg": "0 10px 15px -3px rgba(0,0,0,.3), 0 4px 6px -2px rgba(0,0,0,.1)",
+        "dark-xl": "0 20px 25px -5px rgba(0,0,0,.4), 0 10px 10px -5px rgba(0,0,0,.2)",
       },
-      colors: {
-        emerald: {
-          25: "#f0fdf4",
-        },
-        teal: {
-          25: "#f0fdfa",
-        },
-        cyan: {
-          25: "#ecfeff",
-        },
-        slate: {
-          25: "#fcfcfd",
-          850: "#1e293b",
-          925: "#0f172a",
-        },
-        indigo: {
-          25: "#f8fafc",
-        },
-        sky: {
-          25: "#f0f9ff",
-        },
-        blue: {
-          25: "#eff6ff",
-        },
+      backdropBlur: {
+        xs: "2px", sm: "4px", md: "8px", lg: "12px", xl: "16px", "2xl": "24px", "3xl": "40px",
       },
-      gradientColorStops: {
-        "primary-gradient-start": "#8b5cf6",
-        "primary-gradient-middle": "#6366f1",
-        "primary-gradient-end": "#3b82f6",
-      },
-      borderRadius: {
-        "3xl": "1.5rem",
-        "4xl": "2rem",
-      },
-      spacing: {
-        18: "4.5rem",
-        88: "22rem",
-        128: "32rem",
-      },
+      borderRadius: { "3xl": "1.5rem", "4xl": "2rem" },
+      spacing: { 18: "4.5rem", 88: "22rem", 128: "32rem" },
     },
   },
   plugins: [],

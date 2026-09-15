@@ -1,7 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ---- Design tokens: "interpreter's desk" ------------------------------- */
+:root {
+  --canvas:#F1F1EF;
+  --surface:#FFFFFF;
+  --surface-2:#FAFAF9;
+  --line:#E6E5E1;
+  --ink:#191A1B;
+  --muted:#6F706B;
+  --accent:#2436C9;        /* fills / buttons */
+  --accent-text:#2436C9;   /* accent as text/icon on surfaces */
+  --accent-soft:#E9EBFB;
+  --on-accent:#FFFFFF;
+  --live:#DE3B30;
+  --live-text:#C9372D;
+  --live-soft:#FBEBE9;
+  --on-live:#FFFFFF;
+  --stage:#0F1013;
+  --stage-line:#24262C;
+  --stage-ink:#ECECEA;
+  --shadow:0 1px 2px rgba(20,20,20,.05), 0 14px 34px -22px rgba(20,20,20,.20);
+}
+
+.dark {
+  --canvas:#0E0F12;
+  --surface:#16171B;
+  --surface-2:#1B1C21;
+  --line:#282A31;
+  --ink:#ECEDEA;
+  --muted:#8B8D93;
+  --accent:#4C59E0;
+  --accent-text:#98A2FF;
+  --accent-soft:#20233A;
+  --on-accent:#FFFFFF;
+  --live:#E5544A;
+  --live-text:#F27A70;
+  --live-soft:#2A1B1A;
+  --on-live:#FFFFFF;
+  --stage:#080A0C;
+  --stage-line:#22242A;
+  --stage-ink:#ECECEA;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px -22px rgba(0,0,0,.7);
+}
+
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Small animated details (used sparingly) --------------------------- */
+.eq-bar {
+  width: 2.5px; height: 14px; border-radius: 2px;
+  background: currentColor; transform-origin: center;
+  animation: eqBar 1s ease-in-out infinite;
+}
+@keyframes eqBar { 0%,100% { transform: scaleY(.35) } 50% { transform: scaleY(1) } }
+
+.shimmer-bar {
+  height: 100%; width: 38%; background: var(--accent);
+  animation: shimmer 1.15s ease-in-out infinite;
+}
+@keyframes shimmer { 0% { transform: translateX(-120%) } 100% { transform: translateX(360%) } }
+
+.token-pop { animation: tokenPop .28s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes tokenPop { from { opacity:0; transform: translateY(6px) scale(.96) } to { opacity:1; transform:none } }
+
+.caret {
+  display:inline-block; width:2px; height:1.05em; margin-left:2px;
+  vertical-align:-2px; background: var(--accent-text);
+  animation: caretBlink 1s step-end infinite;
+}
+@keyframes caretBlink { 50% { opacity:0 } }
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar, .shimmer-bar, .token-pop, .caret, .animate-spin, .animate-ping, .animate-pulse {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

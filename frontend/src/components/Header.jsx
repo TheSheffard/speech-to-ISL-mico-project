@@ -9,55 +9,50 @@ const Header = ({
   isl,
 }) => {
   return (
-    <header className="max-w-6xl mx-auto">
-      <div className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/40 dark:border-slate-800/40 shadow-xl rounded-3xl px-6 py-3 flex items-center justify-between transition-all duration-300 ring-1 ring-black/5 dark:ring-white/5">
-        {/* Logo */}
+    <header className="mx-auto max-w-6xl">
+      <div className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-3 py-2.5 shadow-soft sm:px-4 sm:py-3">
+        {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-            <span className="text-white font-bold text-xl">S</span>
+          <div className="grid h-9 w-9 place-items-center rounded-xl bg-ink font-display text-lg font-bold text-canvas">
+            S
           </div>
-
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            <h1 className="font-display text-lg font-semibold leading-none tracking-[-.01em] text-ink">
               SoundSigns
             </h1>
-
-            <p className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-semibold">
-              Voice to Sign Bridge
+            <p className="mt-1 hidden text-[11px] tracking-wide text-muted sm:block">
+              Voice to Indian Sign Language, live
             </p>
           </div>
         </div>
 
-        {/* Right side — mic always visible + status shown underneath */}
-        <div className="flex items-center gap-4">
-          <div className="flex flex-col items-end gap-1">
-            {/* Mic button — always shown, never hidden */}
+        {/* Controls */}
+        <div className="flex items-center gap-3">
+          {/* Mic lives in the header on tablet/desktop; on phones it's docked at the bottom */}
+          <div className="hidden flex-col items-end gap-1 sm:flex">
             <Microphone
               isRecording={isRecording}
               toggleRecording={toggleRecording}
               isProcessing={isProcessing}
             />
 
-            {/* Processing status line — appears below mic when translating */}
             {isProcessing && processingStatus && (
               <div className="flex items-center gap-1.5 pr-1">
-                <div className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-
-                <span className="text-[11px] font-medium text-blue-500 dark:text-blue-400 animate-pulse">
+                <span className="h-3 w-3 animate-spin rounded-full border-2 border-accent-ink border-t-transparent" />
+                <span className="text-[11px] font-medium text-accent-ink">
                   {processingStatus}
                 </span>
               </div>
             )}
 
-            {/* Done status */}
             {!isProcessing && processingStatus === "" && isl && (
-              <span className="text-[11px] text-emerald-500 font-semibold pr-1">
-                ✓ Translation ready
+              <span className="pr-1 text-[11px] font-medium text-muted">
+                Translation ready
               </span>
             )}
           </div>
 
-          <div className="h-6 w-px bg-slate-300 dark:bg-slate-700" />
+          <div className="hidden h-6 w-px bg-line sm:block" />
 
           <ThemeToggle />
         </div>

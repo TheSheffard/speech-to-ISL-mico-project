@@ -1,81 +1,28 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext();
+const ThemeContext = createContext({ theme: "light", toggleTheme: () => {} });
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider = ({ children }) => {
-  // 1. Expand state to handle 'light', 'dark', and 'system'
+export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'system';
+    if (typeof window === "undefined") return "light";
+    const saved = localStorage.getItem("soundsigns-theme");
+    if (saved === "light" || saved === "dark") return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
 
-  // This derived state tells the app if it is ACTUALLY in dark mode
-  // regardless of whether 'dark' or 'system' is selected.
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
   useEffect(() => {
-    const root = window.document.documentElement;
-    
-    // Function to determine if we should apply dark mode
-    const applyTheme = () => {
-      const rootTheme = theme === 'system' 
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : theme;
-
-      if (rootTheme === 'dark') {
-        root.classList.add('dark');
-        setIsDarkMode(true);
-      } else {
-        root.classList.remove('dark');
-        setIsDarkMode(false);
-      }
-    };
-
-    applyTheme();
-    localStorage.setItem('theme', theme);
-
-    // 2. System Theme Listener
-    // If the user is on 'system' mode and changes their OS theme 
-    // while the app is open, the app will now update instantly.
-    if (theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handler = () => applyTheme();
-      
-      mediaQuery.addEventListener('change', handler);
-      return () => mediaQuery.removeEventListener('change', handler);
-    }
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("soundsigns-theme", theme);
   }, [theme]);
 
-  // A smarter toggle that cycles through: Light -> Dark -> System
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      if (prev === 'light') return 'dark';
-      if (prev === 'dark') return 'system';
-      return 'light';
-    });
-  };
-
-  const setThemeMode = (mode) => {
-    setTheme(mode);
-  };
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <ThemeContext.Provider 
-      value={{ 
-        theme,           // 'light' | 'dark' | 'system'
-        isDarkMode,      // boolean (the actual resulting state)
-        toggleTheme,     // Cycle through modes
-        setThemeMode     // Set specifically
-      }}
-    >
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-};
+}

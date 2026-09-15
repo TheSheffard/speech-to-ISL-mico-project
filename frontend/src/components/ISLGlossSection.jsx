@@ -1,44 +1,70 @@
 import InfoTooltip from "./InfoTooltip";
 
+const Arrow = () => (
+  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
+
 const ISLGlossSection = ({ isl }) => {
+  const tokens = isl ? isl.trim().split(/\s+/).filter(Boolean) : [];
+
   return (
-    <div className="group relative bg-white/10 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2rem] border border-white/30 dark:border-slate-700/50 shadow-2xl p-1 transition-all duration-500 hover:scale-[1.01] overflow-hidden">
-      {/* Neon Accent Glow - Top edge */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-70 group-hover:opacity-100 transition-opacity" />
-      
-      <div className="p-6 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="absolute inset-0 bg-violet-500 blur-md opacity-40 animate-pulse" />
-              <div className="relative p-3 bg-gradient-to-br from-violet-500 to-purple-700 rounded-2xl text-white shadow-lg shadow-violet-500/40">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-8 14v2a1 1 0 001 1h8a1 1 0 001-1v-2M5 8h14l-1 8H6L5 8z" />
-                </svg>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-black bg-gradient-to-r from-violet-600 to-purple-500 dark:from-violet-300 dark:to-purple-300 bg-clip-text text-transparent uppercase tracking-tight">
-                ISL Gloss
-              </h3>
-              <span className="text-[10px] font-bold text-violet-600 dark:text-violet-400 uppercase tracking-widest">Structural Notation</span>
-            </div>
-          </div>
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-soft">
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3.5">
+        <div className="flex items-center gap-3">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[.14em] text-muted">
+            Structure
+          </span>
+          <h3 className="font-display text-[15.5px] font-semibold tracking-[-.01em] text-ink">
+            ISL gloss
+          </h3>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-flex h-6 items-center rounded-full bg-surface-2 px-2.5 text-[11px] font-semibold text-muted">
+            {tokens.length ? `${tokens.length} signs` : "SOV order"}
+          </span>
           <InfoTooltip content="The structural notation of sign language" />
         </div>
+      </div>
 
-        <div className="flex-1 bg-violet-500/10 dark:bg-violet-900/20 rounded-3xl p-5 border border-violet-500/30 shadow-inner overflow-auto relative group-hover:border-violet-500/50 transition-colors">
-          {/* Decorative grid pattern for "tech" feel */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:20px_20px]" />
-          
-          <p className="relative z-10 font-mono text-base text-violet-800 dark:text-violet-300 font-bold leading-relaxed whitespace-pre-wrap drop-shadow-sm">
-            {isl || (
-              <span className="text-slate-400 italic font-sans font-medium animate-pulse">
-                Waiting for AI translation...
-              </span>
-            )}
+      {/* Body */}
+      <div className="p-5">
+        {tokens.length === 0 ? (
+          <p className="text-[15px] leading-relaxed text-muted">
+            <span className="font-semibold text-ink">
+              Speak, and the signed order appears here.
+            </span>{" "}
+            ISL reorders English — time and topic come first.
           </p>
-        </div>
+        ) : (
+          <>
+            <p className="mb-3 text-[11.5px] leading-relaxed text-muted">
+              In the sequence it's signed:
+            </p>
+            <div className="flex flex-wrap items-stretch gap-2">
+              {tokens.map((word, i) => (
+                <div key={`${word}-${i}`} className="flex items-stretch gap-2">
+                  <div className="token-pop flex min-w-[58px] flex-col gap-[3px] rounded-xl border border-line bg-surface-2 px-3 pb-2 pt-2.5">
+                    <span className="font-mono text-[9.5px] tracking-wider text-muted">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-mono text-[14.5px] font-semibold tracking-wide text-ink">
+                      {word}
+                    </span>
+                  </div>
+                  {i < tokens.length - 1 && (
+                    <span className="flex items-center text-muted opacity-50">
+                      <Arrow />
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

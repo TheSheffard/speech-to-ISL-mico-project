@@ -3,7 +3,7 @@ import { useState, useRef, useCallback } from "react";
 // Environment-based API configuration
 const API_BASE_URL = import.meta.env.PROD
   ? "https://soundsigns.onrender.com"
-  : "http://localhost:5000";
+  : " http://127.0.0.1:5000";
 
 export const useSpeechRecognition = () => {
   const [transcript, setTranscript] = useState("");
