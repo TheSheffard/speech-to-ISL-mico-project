@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
-const API_BASE_URL = "https://speech-to-sign-language-backend-oe2bwbemk.vercel.app";
+const API_BASE_URL = "https://speech-to-sign-language-backend-psi.vercel.app";
 
 /*
   Real-time speech → ISL.
