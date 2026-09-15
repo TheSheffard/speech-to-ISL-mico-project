@@ -18,10 +18,10 @@ const Header = ({
           </div>
           <div>
             <h1 className="font-display text-lg font-semibold leading-none tracking-[-.01em] text-ink">
-              SoundSigns
+              voice to sign Language
             </h1>
             <p className="mt-1 hidden text-[11px] tracking-wide text-muted sm:block">
-              Voice to Indian Sign Language, live
+              Voice to Sign Language, live
             </p>
           </div>
         </div>
